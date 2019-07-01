@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons>
+      <button ion-button clear (click)="dismissModal()">Fermer</button>
+    </ion-buttons>
+
+    <ion-title>{{ book.name }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card>
+    <ion-card-header>{{ book.name }}<br> ({{ book.author }})</ion-card-header>
+    <ion-card-content>
+      {{ book.content }}
+    </ion-card-content>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <button
+                  ion-button
+                  full
+                  color="success"
+                  *ngIf="book.isLent"
+                  (click)="onToggle()">
+            Rendre
+          </button>
+        </ion-col>
+      </ion-row>
+      <form *ngIf="!book.isLent" #f="ngForm" (ngSubmit)="onSubmitForm(f)">
+        <ion-list>
+          <ion-item>
+            <ion-label>
+              Emprunteur
+            </ion-label>
+            <ion-input placeholder="nom de la personne"
+                       [(ngModel)]="borrower"
+                       name="borrower" required></ion-input>
+          </ion-item>
+        </ion-list>
+        <button type="submit"
+                ion-button
+                full color="secondary" [disabled]="f.invalid">
+          Prêter
+        </button>
+      </form>
+    </ion-grid>
+  </ion-card>
+</ion-content>
